@@ -18,20 +18,17 @@ class grab:
         }
         req = requests.get(
             "https://faucetpay.io/page/user-admin/linked-addresses", headers=headers)
-        # open('hasil.html', 'w').write(req.text)
         parser = bs(req.text, 'html.parser')
         get_tabel = parser.find(
             'table', attrs={'class': 'table table-hover table-bordered'}).find('tbody')
-        # get_address =
         writer = open('list_wallet.txt', 'a+')
         for address in get_tabel.findAll('tr'):
             wallet = address.findAll('td')[1].text
             writer.write(wallet + '\n')
+        print('- wallet save in list_wallet.txt')
 
 
 if __name__ == "__main__":
-    if os.path.exists('__pycache__'):
-        os.rmdir('__pycache__')
     if not os.path.exists('cookie.txt'):
         print('- insert cookie in cookie.txt')
         open('cookie.txt', 'a+')
